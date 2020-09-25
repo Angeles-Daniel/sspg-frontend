@@ -93,13 +93,20 @@ export default function FormModificarAlumno(props) {
           if(checkboxTesis1.checked){
             objeto.semester_1 = true;
             objeto.qualification_1 = inputTesis1.value;
+          } else{
+            objeto.semester_1 = false;
+            objeto.qualification_1 = null;
           }
           if(checkboxTesis2.checked){
             objeto.semester_2 = true;
             objeto.qualification_2 = inputTesis2.value;
+          } else{
+            objeto.semester_2 = false;
+            objeto.qualification_2 = null;
           }
         }
-        const res = await metodoGeneral('/faculties/student/' + prps.id,'PATCH',objeto)  //mandar objeto al back para el registro
+        
+        const res = await metodoGeneral('/faculties/student/' + prps.id,'PUT',objeto)  //mandar objeto al back para el registro
         console.log(res);
         window.location.reload();
       }     
@@ -111,7 +118,7 @@ export default function FormModificarAlumno(props) {
       validated={validated} onSubmit={handleSubmit} onChange={onChange} 
       className="m-4">
         <Form.Group className="text-center" >
-          <h2>Modificar alumno: {prps.first_name} {prps.last_name}</h2>
+          <h2>Modificar alumno: {prps.first_name}, {prps.last_name}</h2>
         </Form.Group>
         <br/>
         <br/>
@@ -209,7 +216,7 @@ const isPregrado = (prps, onChangeTesisUno, onChangeTesisDos) =>{
                  <Form.Group as={Col} md="3">
                    <Form.Label>Nota tesis 1:</Form.Label> 
                  </Form.Group>
-                 {isChecked(prps,prps.semester_1,'1',onChangeTesisUno)}
+                 {isChecked(prps,prps.semester_1,'1',onChangeTesisUno, prps.qualification_1, 'semester_1')}
              </Form.Row>
      
              <br/>
@@ -217,7 +224,7 @@ const isPregrado = (prps, onChangeTesisUno, onChangeTesisDos) =>{
                  <Form.Group as={Col} md="3">
                    <Form.Label>Nota tesis 2:</Form.Label> 
                  </Form.Group>
-                 {isChecked(prps,prps.semester_2,'2', onChangeTesisUno)}
+                 {isChecked(prps,prps.semester_2,'2', onChangeTesisDos, prps.qualification_2, 'semester_2')}
              </Form.Row>
             </>
         ) 
@@ -236,7 +243,7 @@ const isPregrado = (prps, onChangeTesisUno, onChangeTesisDos) =>{
                 <Form.Group as={Col} md="1"></Form.Group>
     
                 <Form.Group as={Col} md="3">
-                    <Form.Check inline type="checkbox" onChange={onChangeTesisUno} id="modificar_checkbox_semester_1"/>
+                    <Form.Check inline type="checkbox" onChange={onChangeTesisUno} id="modificar_checkbox_semester_1" name='semester_1'/>
                     <Form.Label>Tesis 1 aprobado</Form.Label> &nbsp;
                 </Form.Group>
             </Form.Row>
@@ -252,7 +259,7 @@ const isPregrado = (prps, onChangeTesisUno, onChangeTesisDos) =>{
                 <Form.Group as={Col} md="1"></Form.Group>
     
                 <Form.Group as={Col} md="3">
-                    <Form.Check inline type="checkbox" onChange={onChangeTesisDos} id="modificar_checkbox_semester_2"/>
+                    <Form.Check inline type="checkbox" onChange={onChangeTesisDos} id="modificar_checkbox_semester_2" name='semester_2'/>
                     <Form.Label>Tesis 2 aprobado</Form.Label> &nbsp;
                 </Form.Group>
             </Form.Row>
@@ -261,17 +268,17 @@ const isPregrado = (prps, onChangeTesisUno, onChangeTesisDos) =>{
     
 }
 
-const isChecked = (prps,semester,id_number, onChange) => {
+const isChecked = (prps,semester,id_number, onChange, nota, name) => {
     if(semester){
         return (
             <>
                 <Form.Group as={Col} md="5">
-                    <Form.Control type="text" name={`qualification_${id_number}`} defaultValue={prps.qualification_1} id={`modificar_qualification_${id_number}`}/>
+                    <Form.Control type="text" name={`qualification_${id_number}`} defaultValue={nota} id={`modificar_qualification_${id_number}`}/>
                 </Form.Group>
                 <Form.Group as={Col} md="1"></Form.Group>
                 <Form.Group as={Col} md="3">
-                    <Form.Check inline type="checkbox" onChange={onChange} id={`modificar_checkbox_semester_${id_number}`} checked/>
-                    <Form.Label>Tesis 1 aprobado</Form.Label> &nbsp;
+                    <Form.Check inline type="checkbox" onChange={onChange} id={`modificar_checkbox_semester_${id_number}`} defaultChecked name={name}/>
+                    <Form.Label>Tesis {id_number} aprobado</Form.Label> &nbsp;
                 </Form.Group>
             </>
         )
@@ -283,8 +290,8 @@ const isChecked = (prps,semester,id_number, onChange) => {
             </Form.Group>
             <Form.Group as={Col} md="1"></Form.Group>
             <Form.Group as={Col} md="3">
-                <Form.Check inline type="checkbox" onChange={onChange} id={`modificar_checkbox_semester_${id_number}`} />
-                <Form.Label>Tesis 1 aprobado</Form.Label> &nbsp;
+                <Form.Check inline type="checkbox" onChange={onChange} id={`modificar_checkbox_semester_${id_number}`} name={name}/>
+                <Form.Label>Tesis {id_number} aprobado</Form.Label> &nbsp;
             </Form.Group>
         </>
     )

@@ -37,7 +37,7 @@ export default function FormNuevoProyecto(props) {
           estudiante_2.disabled = false;
           estudiante_3.value = '';
           estudiante_3.disabled = true;
-        }else if(tipo == 'TT'){
+        }else if(tipo == 'TESIS'){
           estudiante_2.disabled = false;
           estudiante_3.disabled = false;
         }else if (tipo == 'TSP'){
@@ -93,9 +93,6 @@ export default function FormNuevoProyecto(props) {
     const EstudiantesSinProyecto = estudiantesSinProyecto.result;
     const PeriodosAcademicos = periodosAcademicos.result;
 
-    console.log(PeriodosAcademicos);
-    
-
     return (
       <Form noValidate 
       validated={validated} onSubmit={handleSubmit} onChange={onChange} 
@@ -133,7 +130,7 @@ export default function FormNuevoProyecto(props) {
           <Form.Group as={Col} md="9">
             <Form.Control as="select" name="type" onChange={tipoProyectoChange}>
                 <option value="TI">Trabajo de investigacion</option>
-                <option value="TT">Tesis de grado</option>
+                <option value="TESIS">Tesis de grado</option>
                 <option value="TSP">Trabajo de suficiencia profesional</option>
               </Form.Control>
           </Form.Group>

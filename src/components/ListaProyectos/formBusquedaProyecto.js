@@ -79,7 +79,7 @@ export default function FormBusquedaProyecto(props) {
                     <Form.Control as="select" name="type"> 
                         <option value=''>--Elegir tipo de proyecto--</option>
                         <option value="TI">Trabajo de investigacion</option>
-                        <option value="TT">Tesis de grado</option>
+                        <option value="TESIS">Tesis de grado</option>
                         <option value="TSP">Trabajo de suficiencia profesional</option>
                     </Form.Control>
                 </Form.Group>
