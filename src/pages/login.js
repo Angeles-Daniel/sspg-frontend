@@ -18,18 +18,19 @@ export default function Login(props) {
         }
 
         const tkn = await metodoGeneral('/users/login/','POST',usuario,true)
-        localStorage.setItem('SSPG_token',tkn.token);
-        
-        if(tkn.token != null){
-            const user = await metodoGeneral('/users/')
-            await setJsonStorage('SSPG_usuario',user);
-            
-            history.push('/listaProyectos')
-            window.location.reload();
-        }
-        else{
-            document.getElementById('login-mensaje-error').textContent = 'Login no válido';
-        }
+        if(tkn.length != 0){
+          localStorage.setItem('SSPG_token',tkn.token);
+          if(tkn.token != null){
+              const user = await metodoGeneral('/users/')
+              await setJsonStorage('SSPG_usuario',user);
+              
+              history.push('/listaProyectos')
+              window.location.reload();
+          }
+          else{
+              document.getElementById('login-mensaje-error').textContent = 'Login no válido';
+          }
+        }    
       }
 
     return (

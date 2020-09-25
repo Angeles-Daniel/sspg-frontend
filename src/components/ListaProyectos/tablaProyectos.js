@@ -159,7 +159,7 @@ function Proyecto(props){
     if(student_3 != null){estudiante += `; ${student_3.first_name} ${student_3.last_name}`}
     
     if(type == 'TI'){tipo = 'Trabajo de investigación'}
-    else if(type == 'TT'){tipo = 'Tesis de Pregrado'}
+    else if(type == 'TESIS'){tipo = 'Tesis de Pregrado'}
     else if(type == 'TSP'){tipo = 'Trabajo de Suficiencia profesional'}
 
     return (
