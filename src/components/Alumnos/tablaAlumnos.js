@@ -133,20 +133,6 @@ function Alumno(props){
         phone,
         grade
     },  openModalModificar,  openModalEliminar} = props;
-    
-    // let tipo = '';
-    // let asesor = 'Sin asesor asignado'
-    // let estudiante = '';
-
-    // if(adviser != undefined){asesor = `${adviser.first_name} ${adviser.last_name}`;}
-
-    // if(student_1 != null){estudiante = `${student_1.first_name} ${student_1.last_name}`;}
-    // if(student_2 != null){estudiante += `; ${student_2.first_name} ${student_2.last_name}`}
-    // if(student_3 != null){estudiante += `; ${student_3.first_name} ${student_3.last_name}`}
-    
-    // if(type == 'TI'){tipo = 'Trabajo de investigación'}
-    // else if(type == 'TT'){tipo = 'Tesis de Pregrado'}
-    // else if(type == 'TSP'){tipo = 'Trabajo de Suficiencia profesional'}
 
     return (
         <tr id={`proyecto-${id}`}>

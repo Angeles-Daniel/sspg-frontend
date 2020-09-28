@@ -19,6 +19,7 @@ export default function FormNuevoProyecto(props) {
         school: '1',
         course_initial: 'TESIS_1',
         state: 'PENDIENTE',
+        period_academic: '1'
     });
     
     const onChange = async e => {
@@ -64,7 +65,8 @@ export default function FormNuevoProyecto(props) {
           date_doc_support :formValue.date_doc_support,
           school: formValue.school,
           course_initial: formValue.course_initial,
-          state: formValue.state
+          state: formValue.state,
+          period_academic: formValue.period_academic
         }
         if(formValue.adviser.length != 0){
           objeto.adviser = formValue.adviser;
@@ -78,7 +80,6 @@ export default function FormNuevoProyecto(props) {
         if(formValue.student_3.length != 0){
           objeto.student_3 = formValue.student_3
         }
-        console.log(objeto);
         const res = await metodoGeneral('/projects/','POST',objeto)  //mandar objeto al back para el registro
         console.log(res);
         window.location.reload();
@@ -232,6 +233,20 @@ export default function FormNuevoProyecto(props) {
         <br/>
         <Form.Row>
           <Form.Group as={Col} md="3">
+            <Form.Label>Periodo académico</Form.Label> 
+          </Form.Group>
+          <Form.Group as={Col} md="9">
+              <Form.Control as="select" name="period_academic"> 
+                  {PeriodosAcademicos.map((periodo) => {
+                      return <option key={periodo.id} value={periodo.id}>{periodo.name}</option>
+                  })}
+              </Form.Control>
+          </Form.Group>
+        </Form.Row>
+
+        <br/>
+        <Form.Row>
+          <Form.Group as={Col} md="3">
             <Form.Label>Curso de inicio</Form.Label> 
           </Form.Group>
           <Form.Group as={Col} md="9">
@@ -253,8 +268,6 @@ export default function FormNuevoProyecto(props) {
                 <option value='ACEPTADO'>Aceptado</option>
                 <option value='SUSPENDIDO'>Suspendido</option>
                 <option value='OBSERVADO'>Observado</option>
-                <option value='ENTREGADO'>Entregado</option>
-                <option value='SUSTENTADO'>Sustentado</option>
               </Form.Control>
           </Form.Group>
         </Form.Row>

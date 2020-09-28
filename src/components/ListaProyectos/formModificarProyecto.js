@@ -4,7 +4,7 @@ import {getJsonStorage} from '../../lib/jsonStorages'
 import {metodoGeneral} from '../../lib/metodos'
 
 export default function FormModificarProyecto(props) {
-    const {prps, Profesores, EstudiantesSinProyecto} = props;
+    const {prps, Profesores, EstudiantesSinProyecto, PeriodosAcademicos} = props;
     const [validated, setValidated] = useState(false);
     const [formValue, setFormValue] = useState({
         name: prps.name,
@@ -19,6 +19,7 @@ export default function FormModificarProyecto(props) {
         school: prps.school,
         course_initial: prps.course_initial,
         state: prps.state,
+        period_academic: prps.period_academic
     });
     
     const onChange = async e => {
@@ -46,7 +47,6 @@ export default function FormModificarProyecto(props) {
           estudiante_3.value = '0';
           estudiante_3.disabled = true;
         }
-        
     }
 
     const handleSubmit = async event => {
@@ -67,6 +67,7 @@ export default function FormModificarProyecto(props) {
           school: formValue.school,
           course_initial: formValue.course_initial,
           state: formValue.state,  
+          period_academic: formValue.period_academic
         }
         if(formValue.adviser != prps.id_adviser){
           objeto.adviser = formValue.adviser;
@@ -234,6 +235,20 @@ export default function FormModificarProyecto(props) {
         <br/>
         <Form.Row>
           <Form.Group as={Col} md="3">
+            <Form.Label>Periodo académico</Form.Label> 
+          </Form.Group>
+          <Form.Group as={Col} md="9">
+              <Form.Control as="select" defaultValue={prps.period_academic} name="period_academic"> 
+                  {PeriodosAcademicos.map((periodo) => {
+                      return <option key={periodo.id} value={periodo.id}>{periodo.name}</option>
+                  })}
+              </Form.Control>
+          </Form.Group>
+        </Form.Row>
+
+        <br/>
+        <Form.Row>
+          <Form.Group as={Col} md="3">
             <Form.Label>Curso de inicio</Form.Label> 
           </Form.Group>
           <Form.Group as={Col} md="9">
@@ -245,26 +260,12 @@ export default function FormModificarProyecto(props) {
         </Form.Row>
 
         <br/>
-        <Form.Row>
-          <Form.Group as={Col} md="3">
-            <Form.Label>Estado del proyecto</Form.Label> 
-          </Form.Group>
-          <Form.Group as={Col} md="9">
-            <Form.Control as="select" name="state"  defaultValue={prps.state} > 
-                <option value='PENDIENTE'>Pendiente</option>
-                <option value='ACEPTADO'>Aceptado</option>
-                <option value='SUSPENDIDO'>Suspendido</option>
-                <option value='OBSERVADO'>Observado</option>
-                <option value='ENTREGADO'>Entregado</option>
-                <option value='SUSTENTADO'>Sustentado</option>
-              </Form.Control>
-          </Form.Group>
-        </Form.Row>
+          {mostrarEstado(prps.state)}
         <br/>
 
         <br/>
         <div style={{textAlign: "center"}}>
-         <Button style={{textAlign: "center"}} type="submit" variant="success">Crear nuevo proyecto</Button>
+         <Button style={{textAlign: "center"}} type="submit" variant="success">Modificar proyecto</Button>
         </div>
       </Form>
     );
@@ -276,4 +277,36 @@ function existe(objeto){
     return <option value={objeto.id}>{(objeto.last_name).toUpperCase()}, {(objeto.first_name)}</option>
   }
   return (<></>)
+}
+
+function mostrarEstado(state){
+  if(state == 'ENTREGADO' || state == 'SUSTENTADO'){
+    return (
+      <>
+        <Form.Row>
+          <Form.Group as={Col} md="3">
+            <Form.Label>Estado del proyecto</Form.Label> 
+          </Form.Group>
+          <Form.Group as={Col} md="9">   
+              <Form.Control type="text" defaultValue={state} disabled/>
+          </Form.Group>
+        </Form.Row>
+      </>
+    );
+  }
+  return (
+    <Form.Row>
+      <Form.Group as={Col} md="3">
+        <Form.Label>Estado del proyecto</Form.Label> 
+      </Form.Group>
+      <Form.Group as={Col} md="9">
+        <Form.Control as="select" name="state"  defaultValue={state} > 
+            <option value='PENDIENTE'>Pendiente</option>
+            <option value='ACEPTADO'>Aceptado</option>
+            <option value='SUSPENDIDO'>Suspendido</option>
+            <option value='OBSERVADO'>Observado</option>
+          </Form.Control>
+      </Form.Group>
+    </Form.Row>
+  );
 }

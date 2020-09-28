@@ -72,7 +72,8 @@ function barraNavegacion(){
 
     return(
         <Nav className="mr-auto">
-            <Nav.Link href={`/listaProyectos`}>Proyectos</Nav.Link>
+            <Nav.Link href={`/listaProyectos?general=true`}>Proyectos</Nav.Link>
+            <Nav.Link href={`/sustentacion?sustentacion=true`}>Sustentaciones</Nav.Link>
             <Nav.Link href={`/alumnos`}>Alumnos</Nav.Link>
             <Nav.Link href={`/profesores`}>Docentes</Nav.Link>
         </Nav>

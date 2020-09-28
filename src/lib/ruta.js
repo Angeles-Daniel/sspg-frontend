@@ -1,1 +1,1 @@
-export const ruta = 'http://f018e44f6e9b.ngrok.io' + '/api/v1'
+export const ruta = 'http://d118292f5f18.ngrok.io' + '/api/v1'

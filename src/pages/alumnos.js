@@ -8,9 +8,12 @@ import useFetch from '../hooks/useFetch';
 import TablaAlumnos from '../components/Alumnos/tablaAlumnos'
 import FormNuevoAlumno from '../components/Alumnos/formNuevoAlumno'
 import ModalAgregarAlumno from '../components/Modales/modal'
+import FormBusquedaAlumno from '../components/Alumnos/formBusquedaAlumno'
+import {useLocation} from 'react-router-dom'
 
 export default function Alumnos(props) {    
-    const alumnos = useFetch('/faculties/student');
+    const search = useLocation().search
+    const alumnos = useFetch(`/faculties/student${search}`);
     const {setState,state} = props; setState(state);
     const [isOpenModalAgregar, setIsOpenModalAgregar] = useState(false);
 
@@ -26,6 +29,9 @@ export default function Alumnos(props) {
         <Container>
         <br></br><br></br>
         <h3 style={{textAlign: "center"}}>Lista de alumnos</h3>
+            <br />
+            <FormBusquedaAlumno/>
+
             <button type="button" className="btn btn-success" onClick = {openModalAgregar}>Nuevo Alumno</button>
             <ModalAgregarAlumno isOpenModal = {isOpenModalAgregar} closeModal= {closeModalAgregar} >
                 <FormNuevoAlumno/> 

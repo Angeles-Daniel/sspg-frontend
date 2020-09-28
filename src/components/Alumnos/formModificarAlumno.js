@@ -6,8 +6,8 @@ export default function FormModificarAlumno(props) {
     const {prps} = props
     const [validated, setValidated] = useState(false);
     const [formValue, setFormValue] = useState({
-        first_name: prps.first_name,
         last_name: prps.last_name,
+        first_name: prps.first_name,
         grade: prps.grade,
         code: prps.code,
         document: prps.document,
@@ -128,7 +128,7 @@ export default function FormModificarAlumno(props) {
             <Form.Label>Apellidos:</Form.Label> 
           </Form.Group>
           <Form.Group as={Col} md="9">
-            <Form.Control type="text" name="first_name" defaultValue={prps.first_name} required/>
+            <Form.Control type="text" name="last_name" defaultValue={prps.last_name} required/>
           </Form.Group>
         </Form.Row>
 
@@ -138,7 +138,7 @@ export default function FormModificarAlumno(props) {
             <Form.Label>Nombres:</Form.Label> 
           </Form.Group>
           <Form.Group as={Col} md="9">
-            <Form.Control type="text" name="last_name" defaultValue={prps.last_name} required/>
+            <Form.Control type="text" name="first_name" defaultValue={prps.first_name} required/>
           </Form.Group>
         </Form.Row>
         
@@ -151,7 +151,7 @@ export default function FormModificarAlumno(props) {
             <Form.Control as="select" name="grade" defaultValue={prps.grade} onChange={onChangeGrade}> 
                 <option value='PREGRADO'>Pregrado</option>
                 <option value='POSGRADO'>Posgrado</option>
-              </Form.Control>
+            </Form.Control>
           </Form.Group>
         </Form.Row>
 

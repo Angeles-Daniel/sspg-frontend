@@ -39,8 +39,8 @@ export default function FormNuevoProfesor() {
         console.log(objeto);
         
         const res = await metodoGeneral('/faculties/teacher','POST',objeto)  //mandar objeto al back para el registro
-        // console.log(res);
-        // window.location.reload();
+        console.log(res);
+        window.location.reload();
       }     
       setValidated(true)
     };

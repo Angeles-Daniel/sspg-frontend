@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom'
 
 export default function FormBusquedaProyecto(props) {
     const history = useHistory();
-    const {periodosAcademicos} = props;
+    const {periodosAcademicos, bandera, ruta} = props;
     const [formValue, setFormValue] = useState({
         search: '',
         state: '',
@@ -21,7 +21,6 @@ export default function FormBusquedaProyecto(props) {
 
     const handleSubmit = async event => {
       event.preventDefault();
-      console.log(formValue);
       let valoresValue = ''
       const valoresValuesArray = []
       if(formValue.search.length != 0){ valoresValuesArray.push(`search=${formValue.search}`) }
@@ -30,24 +29,27 @@ export default function FormBusquedaProyecto(props) {
       if(formValue.periodo.length != 0){ valoresValuesArray.push(`periodo=${formValue.periodo}`) }
     
       if(valoresValuesArray.length != 0){
-        valoresValue = '?'
         for(let i in valoresValuesArray){
-            if(i != 0){
+            if(i != 0 || ruta != 'listaProyectos'){
                 valoresValue += '&'
             }
             valoresValue += valoresValuesArray[i]
         }
       }
-      history.push(`listaProyectos${valoresValue}`)
+      let search = ''
+      if(ruta == 'listaProyectos'){
+          search = `${ruta}?general=true&${valoresValue}`
+      }
+      else if (ruta == 'sustentacion'){
+        search = `${ruta}?sustentacion=true${valoresValue}`
+      }
+      history.push(search)
     };
 
     if(periodosAcademicos.loading || !periodosAcademicos.result ){
       return "loading..."
     }
-    const PeriodosAcademicos = periodosAcademicos.result;
-
-    console.log(PeriodosAcademicos);
-    
+    const PeriodosAcademicos = periodosAcademicos.result;  
 
     return (
         <Form onSubmit={handleSubmit} onChange={onChange}>
@@ -63,7 +65,7 @@ export default function FormBusquedaProyecto(props) {
                 </InputGroup.Append>
             </InputGroup>
             <Form.Row>
-                <Form.Group as={Col} md="4"> 
+                {/* <Form.Group as={Col} md="4"> 
                     <Form.Control as="select" name="state"> 
                         <option value=''>--Elegir estado--</option>
                         <option value='PENDIENTE'>Pendiente</option>
@@ -71,9 +73,9 @@ export default function FormBusquedaProyecto(props) {
                         <option value='SUSPENDIDO'>Suspendido</option>
                         <option value='OBSERVADO'>Observado</option>
                         <option value='ENTREGADO'>Entregado</option>
-                        <option value='SUSTENTADO'>Sustentado</option>
                     </Form.Control>
-                </Form.Group>
+                </Form.Group> */}
+                {estadosSelect(bandera)}
 
                 <Form.Group as={Col} md="4"> 
                     <Form.Control as="select" name="type"> 
@@ -97,5 +99,30 @@ export default function FormBusquedaProyecto(props) {
     );
 }
 
+
+const estadosSelect = (bandera) => {
+    if(bandera){
+        return (<Form.Group as={Col} md="4"> 
+        <Form.Control as="select" name="state"> 
+                <option value=''>--Elegir estado--</option>
+                <option value='PENDIENTE'>Pendiente</option>
+                <option value='ACEPTADO'>Aceptado</option>
+                <option value='SUSPENDIDO'>Suspendido</option>
+                <option value='OBSERVADO'>Observado</option>
+                <option value='ENTREGADO'>Entregado</option>
+            </Form.Control>
+        </Form.Group>)
+    }
+    return (
+        <Form.Group as={Col} md="4"> 
+            <Form.Control as="select" name="state"> 
+                <option value=''>--Elegir estado--</option>
+                <option value='ENTREGADO'>Entregado</option>
+                <option value='SUSTENTADO'>Sustentado</option>
+            </Form.Control>
+        </Form.Group>
+    );
+
+}
 
 
