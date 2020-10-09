@@ -3,15 +3,17 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export const generarPDF = (titulo, proyectos) => {
-    if((proyectos.loading || !proyectos.result) ){
-        // const tipo = document.getElementById('proyecto-filtro-tipo').value
-        // const periodo = document.getElementById('proyecto-filtro-periodo').value
-        // const estado = document.getElementById('proyecto-filtro-estado').value
+    console.log('aaa');
+    if(!(proyectos.loading || !proyectos.result) ){
+        console.log('bbb');
+        const tipo = document.getElementById('proyecto-filtro-tipo').value
+        const periodo = document.getElementById('proyecto-filtro-periodo').value
+        const estado = document.getElementById('proyecto-filtro-estado').value
         const filtros = {
             titulo,
-            // tipo,
-            // periodo,
-            // estado
+            tipo,
+            periodo,
+            estado
         }
         const Proyectos = proyectos.result; 
         const json = generarJson(filtros, Proyectos);
@@ -23,22 +25,22 @@ export const generarPDF = (titulo, proyectos) => {
 const generarJson= (filtros, Proyectos) => {
     let titulo = filtros.titulo;
     let nombre = '';
-    // if(filtros.tipo.length != 0){
-    //     if(filtros.tipo == 'TSP'){
-    //         nombre += `- Trabajos de suficiencia profesional -`
-    //     }else if(filtros.tipo =='TI'){
-    //         nombre += `- Trabajos de investigación -`
-    //     }
-    //     else{
-    //         nombre += `- Tesis -`
-    //     }
-    // }
-    // if(filtros.periodo.length != 0){
-    //     nombre += `- ${filtros.periodo} -`
-    // }
-    // if(filtros.estado.length != 0){
-    //     nombre += `- ${(filtros.estado).toLowerCase()}s -`
-    // }
+    if(filtros.tipo.length != 0){
+        if(filtros.tipo == 'TSP'){
+            nombre += `- Trabajos de suficiencia profesional -`
+        }else if(filtros.tipo =='TI'){
+            nombre += `- Trabajos de investigación -`
+        }
+        else{
+            nombre += `- Tesis -`
+        }
+    }
+    if(filtros.periodo.length != 0){
+        nombre += `- ${filtros.periodo} -`
+    }
+    if(filtros.estado.length != 0){
+        nombre += `- ${(filtros.estado).toLowerCase()}s -`
+    }
     let json = {
         content: [
             {
@@ -136,29 +138,29 @@ const listarProyectos = (Proyectos, json, titulo) => {
         json.content[1].table.widths.push(75)
         json.content[1].table.widths.push(75)
         json.content[1].table.widths.push(75)
-        json.content[1].table.widths.push(40)
+        json.content[1].table.widths.push(50)
         Proyectos.map(proyecto => {
 
             let alumnos = '';
             let jurado = ''
             let fecha = ''
             let hora = '' 
-        
-            let fechaHora = date_supporting.split('T');
+            let asesor = ''
+            let fechaHora = proyecto.date_supporting.split('T');
             fecha = fechaHora[0];
             hora = fechaHora[1].split(':');
             hora = hora[0] + ':' + hora[1]
-            fecha = fecha + ' ' + hora
+            fecha = fecha + '\n' + hora
         
-            if(adviser != undefined){asesor = `${proyecto.adviser.last_name} ${proyecto.adviser.first_name}`;}
+            if(proyecto.adviser != undefined){asesor = `${proyecto.adviser.last_name} ${proyecto.adviser.first_name}`;}
         
-            if(student_1 != null){alumnos = `${proyecto.student_1.last_name}, ${proyecto.student_1.first_name}`;}
-            if(student_2 != null){alumnos += `; ${proyecto.student_2.last_name}, ${proyecto.student_2.first_name}`}
-            if(student_3 != null){alumnos += `; ${proyecto.student_3.last_name} ${proyecto.student_3.first_name}`}
+            if(proyecto.student_1 != null){alumnos = `${proyecto.student_1.last_name}, ${proyecto.student_1.first_name}`;}
+            if(proyecto.student_2 != null){alumnos += `; ${proyecto.student_2.last_name}, ${proyecto.student_2.first_name}`}
+            if(proyecto.student_3 != null){alumnos += `; ${proyecto.student_3.last_name} ${proyecto.student_3.first_name}`}
         
-            if(jury_1 != null){jurado = `${proyecto.jury_1.last_name}, ${proyecto.jury_1.first_name}`;}
-            if(jury_2 != null){jurado += `; ${proyecto.jury_2.last_name}, ${proyecto.jury_2.first_name}`}
-            if(jury_3 != null){jurado += `; ${proyecto.jury_3.last_name} ${proyecto.jury_3.first_name}`}
+            if(proyecto.jury_1 != null){jurado = `${proyecto.jury_1.last_name}, ${proyecto.jury_1.first_name}`;}
+            if(proyecto.jury_2 != null){jurado += `; ${proyecto.jury_2.last_name}, ${proyecto.jury_2.first_name}`}
+            if(proyecto.jury_3 != null){jurado += `; ${proyecto.jury_3.last_name} ${proyecto.jury_3.first_name}`}
 
             alumnos = `${proyecto.student_1.last_name}, ${proyecto.student_1.first_name}`
             if(proyecto.student_2 != null){
