@@ -52,7 +52,7 @@ function labelSSPG(){
         </Navbar.Brand>
     )
     return (
-        <Navbar.Brand href="/ListaProyectos">
+        <Navbar.Brand href="/ListaProyectos?general=true">
         <img 
             alt="Planilla Fugusa" 
             src={LogoRedux}

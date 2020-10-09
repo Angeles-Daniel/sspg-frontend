@@ -24,7 +24,7 @@ export default function Login(props) {
               const user = await metodoGeneral('/users/')
               await setJsonStorage('SSPG_usuario',user);
               
-              history.push('/listaProyectos')
+              history.push('/listaProyectos?general=true')
               window.location.reload();
           }
           else{

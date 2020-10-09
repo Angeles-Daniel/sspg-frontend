@@ -9,6 +9,7 @@ import TablaProyectos from '../components/ListaProyectos/tablaProyectos'
 import FormBusquedaProyecto from '../components/ListaProyectos/formBusquedaProyecto'
 import FormNuevoProyecto from '../components/ListaProyectos/formNuevoProyecto'
 import ModalAgregarProyecto from '../components/Modales/modal'
+import {generarPDF} from '../lib/reporteProyectos'
 import {useLocation} from 'react-router-dom'
 
 export default function ListaProyectos(props) {
@@ -29,6 +30,11 @@ export default function ListaProyectos(props) {
         setIsOpenModalAgregar(false);
     }
 
+    const crearReporte = () => {
+        const titulo = 'REPORTE DE PROYECTOS'
+        generarPDF(titulo, proyectos)
+    }
+
     return (
         <Container>
         <br></br><br></br>
@@ -37,6 +43,7 @@ export default function ListaProyectos(props) {
             <FormBusquedaProyecto periodosAcademicos={periodosAcademicos} bandera={true} ruta='listaProyectos'/>
 
             <button type="button" className="btn btn-success" onClick = {openModalAgregar}>Nuevo Proyecto</button>
+            <button type="button" className="btn btn-primary" onClick = {crearReporte}>Reporte</button>
             <ModalAgregarProyecto isOpenModal = {isOpenModalAgregar} closeModal= {closeModalAgregar} >
                 <FormNuevoProyecto profesores= {profesoresAsesores} estudiantesSinProyecto={estudiantesSinProyecto} periodosAcademicos={periodosAcademicos}/> 
             </ModalAgregarProyecto>

@@ -65,20 +65,10 @@ export default function FormBusquedaProyecto(props) {
                 </InputGroup.Append>
             </InputGroup>
             <Form.Row>
-                {/* <Form.Group as={Col} md="4"> 
-                    <Form.Control as="select" name="state"> 
-                        <option value=''>--Elegir estado--</option>
-                        <option value='PENDIENTE'>Pendiente</option>
-                        <option value='ACEPTADO'>Aceptado</option>
-                        <option value='SUSPENDIDO'>Suspendido</option>
-                        <option value='OBSERVADO'>Observado</option>
-                        <option value='ENTREGADO'>Entregado</option>
-                    </Form.Control>
-                </Form.Group> */}
                 {estadosSelect(bandera)}
 
                 <Form.Group as={Col} md="4"> 
-                    <Form.Control as="select" name="type"> 
+                    <Form.Control as="select" name="type" id='proyecto-filtro-tipo'> 
                         <option value=''>--Elegir tipo de proyecto--</option>
                         <option value="TI">Trabajo de investigacion</option>
                         <option value="TESIS">Tesis de grado</option>
@@ -87,7 +77,7 @@ export default function FormBusquedaProyecto(props) {
                 </Form.Group>
 
                 <Form.Group as={Col} md="4"> 
-                    <Form.Control as="select" name="periodo"> 
+                    <Form.Control as="select" name="periodo" id='proyecto-filtro-periodo'> 
                         <option value=''>--Elegir periodo academico--</option>
                         {PeriodosAcademicos.map((periodo) => {
                             return <option key={periodo.id} value={periodo.name}>{periodo.name}</option>
@@ -103,7 +93,7 @@ export default function FormBusquedaProyecto(props) {
 const estadosSelect = (bandera) => {
     if(bandera){
         return (<Form.Group as={Col} md="4"> 
-        <Form.Control as="select" name="state"> 
+        <Form.Control as="select" name="state" id='proyecto-filtro-estado'> 
                 <option value=''>--Elegir estado--</option>
                 <option value='PENDIENTE'>Pendiente</option>
                 <option value='ACEPTADO'>Aceptado</option>
@@ -115,7 +105,7 @@ const estadosSelect = (bandera) => {
     }
     return (
         <Form.Group as={Col} md="4"> 
-            <Form.Control as="select" name="state"> 
+            <Form.Control as="select" name="state" id='proyecto-filtro-estado'> 
                 <option value=''>--Elegir estado--</option>
                 <option value='ENTREGADO'>Entregado</option>
                 <option value='SUSTENTADO'>Sustentado</option>
